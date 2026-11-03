@@ -13,8 +13,15 @@ export class ImpactLaugh {
   }
   unlock() {
     if (!this.enabled) return;
-    this.context ??= new AudioContext();
-    void this.context.resume().catch(() => {});
+    try {
+      const AudioContextClass = window.AudioContext || (window as unknown as {webkitAudioContext?: typeof AudioContext}).webkitAudioContext;
+      if (!AudioContextClass) return;
+      this.context ??= new AudioContextClass();
+      void this.context.resume().catch(() => {});
+    } catch {
+      // Audio is optional: restricted mobile browsers must still start the game.
+      return;
+    }
     this.buffer ??= fetch(laughUrl)
       .then(r => { if (!r.ok) throw new Error('Laugh audio unavailable'); return r.arrayBuffer(); })
       .then(bytes => this.context!.decodeAudioData(bytes));
