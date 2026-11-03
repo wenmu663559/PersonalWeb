@@ -5,7 +5,7 @@ try {
  const page=await browser.newPage();
  await page.goto('http://127.0.0.1:5174/?debug=1');
  await page.waitForFunction(()=>typeof window.__frog==='function');
- await page.locator('#sound').click();
+ assert.equal(await page.locator('#sound').textContent(),'声音：开','Sound defaults on');
  await page.locator('#play').click();
  const command=fn=>page.evaluate(async op=>{
    const m=await import(document.querySelector('script[src*="/src/main.ts"]').src);
@@ -26,5 +26,8 @@ try {
  await page.locator('#sound').click();
  assert.equal(await command('state'),false,'Mute stops immediately');
  assert.equal(await command('hit'),false,'Muted impacts stay silent');
+ await page.reload();
+ await page.waitForFunction(()=>typeof window.__frog==='function');
+ assert.equal(await page.locator('#sound').textContent(),'声音：关','Explicit mute is remembered');
  console.log('PASS: decoded audio plays, 3-second minimum, hit extension, pause and mute');
 } finally {await browser.close();}

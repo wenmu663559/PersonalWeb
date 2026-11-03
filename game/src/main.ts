@@ -5,9 +5,9 @@ import "./style.css";
 import { CONFIG as C, launch, power, rebound } from "./physics";
 const $ = (id: string) => document.getElementById(id)!;
 let scene: World;
-let muted = true;
+let muted = false;
 try {
-  muted = localStorage.getItem("frog-muted") !== "false";
+  muted = localStorage.getItem("frog-muted") === "true";
 } catch {}
 export const laugh = new ImpactLaugh();
 laugh.setEnabled(!muted);
