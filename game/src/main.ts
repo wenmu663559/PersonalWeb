@@ -4,6 +4,14 @@ import frogUrl from "./frog-sideeye.png?url";
 import "./style.css";
 import { CONFIG as C, launch, power, rebound } from "./physics";
 const $ = (id: string) => document.getElementById(id)!;
+declare global {
+  interface Window {
+    frogStartRequested: boolean;
+    frogReady: boolean;
+    frogBootStatus: (message: string) => void;
+  }
+}
+window.frogBootStatus?.('正在加载角色图片…');
 let scene: World;
 let muted = false;
 try {
@@ -75,7 +83,13 @@ class World extends Phaser.Scene {
   constructor() {
     super("world");
   }
-  preload() { this.load.image("milk-frog", frogUrl); }
+  preload() {
+    this.load.on('loaderror', () => {
+      window.frogBootStatus?.('角色图片加载失败，请重新加载。');
+      $('retry').hidden = false;
+    });
+    this.load.image("milk-frog", frogUrl);
+  }
   create() {
     scene = this;
     this.cameras.main.setBounds(0, 0, Number.MAX_SAFE_INTEGER, 640);
@@ -173,6 +187,10 @@ class World extends Phaser.Scene {
       },
     );
     this.matter.world.pause();
+    window.frogReady = true;
+    window.frogBootStatus?.('加载完成，点击开始');
+    $('retry').hidden = true;
+    if (window.frogStartRequested) this.reset();
     if (new URLSearchParams(location.search).has("debug"))
       (window as any).__frog = () => ({
         x: this.frog.x,
@@ -407,7 +425,9 @@ export const game = new Phaser.Game({
   render: { antialias: true },
   audio: { noAudio: true },
 });
-$("play").onclick = () => scene?.reset();
+window.addEventListener('frog-start', () => {
+  if (window.frogReady && scene && !scene.running) scene.reset();
+});
 $("pause").onclick = () => scene?.pause();
 $("restart").onclick = () => scene?.reset();
 $("sound").onclick = () => {

@@ -37,6 +37,8 @@
             按住鼠标 / 空格 / 游戏区域蓄力，松开跳跃。<br />必须落稳才能再跳；撞上尖刺会向后弹退。<br />掉进深坑回到检查点，无限向前，没有终点，挑战最远距离。
           </p>
           <button id="play">开始弹跳 ↗</button>
+          <p id="boot-status" role="status">正在加载游戏…</p>
+          <button id="retry" hidden onclick="location.reload()">重新加载</button>
           <p id="best"></p>
         </div>
       </div>
@@ -46,6 +48,33 @@
         <strong id="percent">0%</strong>
       </div>
     </main>
+    <script>
+      window.frogStartRequested = false;
+      window.frogReady = false;
+      window.frogBootStatus = function(message) {
+        document.getElementById('boot-status').textContent = message;
+      };
+      function requestStart(event) {
+        window.frogStartRequested = true;
+        if (!window.frogReady) window.frogBootStatus('正在加载，完成后会自动开始…');
+        window.dispatchEvent(new Event('frog-start'));
+      }
+      document.getElementById('play').addEventListener('click', requestStart);
+      document.getElementById('play').addEventListener('touchend', requestStart, {passive:false});
+      window.addEventListener('error', function(event) {
+        if (!window.frogReady && event.message) {
+          window.frogBootStatus('启动失败：' + event.message);
+          document.getElementById('retry').hidden = false;
+        }
+      });
+      setTimeout(function() {
+        if (!window.frogReady) {
+          window.frogBootStatus('加载未完成，请重试。QQ 内也可通过右上角选择“浏览器打开”。');
+          document.getElementById('retry').hidden = false;
+        }
+      }, 15000);
+    </script>
     <script type="module" src="/src/main.ts"></script>
+    <script nomodule>window.frogBootStatus('QQ 浏览器内核版本较旧，请通过右上角选择“浏览器打开”。');</script>
   </body>
 </html>
