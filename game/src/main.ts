@@ -1,4 +1,5 @@
 import Phaser from "phaser";
+import { ImpactLaugh } from "./laugh";
 import frogUrl from "./frog-sideeye.png?url";
 import "./style.css";
 import { CONFIG as C, launch, power, rebound } from "./physics";
@@ -8,6 +9,8 @@ let muted = true;
 try {
   muted = localStorage.getItem("frog-muted") !== "false";
 } catch {}
+export const laugh = new ImpactLaugh();
+laugh.setEnabled(!muted);
 function sound(f = 400) {
   if (muted) return;
   try {
@@ -86,7 +89,7 @@ class World extends Phaser.Scene {
     this.frog = this.matter.add
       .image(110, 420, "body")
       .setCircle(C.radius)
-      .setFriction(0.8, 0.004, 0.9)
+      .setFriction(0, 0.004, 0)
       .setBounce(0.05)
       .setAlpha(0);
     this.frog.setFixedRotation();
@@ -164,7 +167,7 @@ class World extends Phaser.Scene {
                 onComplete: () => spark.destroy(),
               });
             }
-            sound(650);
+            void laugh.hit();
           }
         }
       },
@@ -203,7 +206,7 @@ class World extends Phaser.Scene {
       this.nextChunk = Math.max(this.nextChunk, index + 1);
       const bodies: MatterJS.BodyType[] = [];
       const art: Phaser.GameObjects.GameObject[] = [];
-      const ground = this.matter.add.rectangle(x + 360, y + 150, 720, 300, {isStatic: true, label: "ground", friction: 1});
+      const ground = this.matter.add.rectangle(x + 360, y + 150, 720, 300, {isStatic: true, label: "ground", friction: 0, frictionStatic: 0});
       bodies.push(ground); this.land.push(ground);
       art.push(this.add.rectangle(x + 360, y + 150, 720, 300, 0x8ca879), this.add.rectangle(x + 360, y + 7, 720, 14, 0x526f50));
       art.push(this.add.ellipse(x + 240, 100, 160, 35, 0xf7f7e7), this.add.circle(x + 400, 470, 140, 0xc3d8ac).setDepth(-1));
@@ -252,6 +255,7 @@ class World extends Phaser.Scene {
     }
   }
   begin() {
+    laugh.unlock();
     if (this.running && !this.paused && this.grounded && !this.held) {
       this.held = true;
       this.charge = 0;
@@ -275,6 +279,8 @@ class World extends Phaser.Scene {
     }
   }
   reset() {
+    laugh.stop();
+    laugh.unlock();
     this.saveDistance();
     for (const chunk of this.chunks) {chunk.bodies.forEach(b=>this.matter.world.remove(b)); chunk.art.forEach(o=>o.destroy());}
     this.chunks=[]; this.land=[]; this.spikes=[]; this.nextChunk=0; this.farthest=0;
@@ -308,6 +314,7 @@ class World extends Phaser.Scene {
   pause() {
     if (!this.running || this.won) return;
     this.paused = !this.paused;
+    if (this.paused) laugh.stop();
     this.cancel();
     this.paused ? this.matter.world.pause() : this.matter.world.resume();
     $("pause").textContent = this.paused ? "继续 Esc" : "暂停 Esc";
@@ -339,9 +346,9 @@ class World extends Phaser.Scene {
     const b = this.frog.body as MatterJS.BodyType;
     const floor = this.land.some(
       (p) =>
-        this.frog.x > p.bounds.min.x - C.radius * 0.6 &&
-        this.frog.x < p.bounds.max.x + C.radius * 0.6 &&
-        Math.abs(this.frog.y + C.radius - p.bounds.min.y) < 7,
+        this.frog.x >= p.bounds.min.x &&
+        this.frog.x <= p.bounds.max.x &&
+        Math.abs(this.frog.y + C.radius - p.bounds.min.y) < 1.5,
     );
     if (floor && Math.abs(b.velocity.y) < 1) {
       this.frog.setVelocity(0, 0);
@@ -405,6 +412,8 @@ $("pause").onclick = () => scene?.pause();
 $("restart").onclick = () => scene?.reset();
 $("sound").onclick = () => {
   muted = !muted;
+  laugh.setEnabled(!muted);
+  laugh.unlock();
   $("sound").textContent = muted ? "声音：关" : "声音：开";
   try {
     localStorage.setItem("frog-muted", String(muted));

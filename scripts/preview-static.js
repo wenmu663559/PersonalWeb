@@ -6,9 +6,9 @@ createServer(async (req,res) => {
   if(path === '/game') {res.writeHead(302,{Location:'/game/'});return res.end();}
   let file=files[path];
   if (path === '/game' || path === '/game/') file=['game/index.html','text/html'];
-  if (/^\/game\/assets\/[a-zA-Z0-9_.-]+\.(js|css|png|svg|woff2)$/.test(path)) {
+  if (/^\/game\/assets\/[a-zA-Z0-9_.-]+\.(js|css|png|svg|woff2|mp3)$/.test(path)) {
     const ext=path.split('.').pop();
-    file=[path.slice(1),{js:'text/javascript',css:'text/css',png:'image/png',svg:'image/svg+xml',woff2:'font/woff2'}[ext]];
+    file=[path.slice(1),{js:'text/javascript',css:'text/css',png:'image/png',svg:'image/svg+xml',woff2:'font/woff2',mp3:'audio/mpeg'}[ext]];
   }
   if (!file) {res.writeHead(404);return res.end('Not found');}
   try { const body=await readFile(`dist/${file[0]}`);res.writeHead(200,{'Content-Type':file[1]+'; charset=utf-8'});res.end(body); }
