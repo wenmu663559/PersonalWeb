@@ -6,15 +6,17 @@
   "scripts": {
     "start": "npm run build && node scripts/preview-static.js",
     "dev": "node --watch server.js",
-    "test": "node --test",
+    "test": "node --test test/*.test.js",
     "cf:dev": "wrangler dev",
     "cf:login": "wrangler login",
     "cf:check": "wrangler deploy --dry-run",
     "cf:migrate": "wrangler d1 migrations apply lijunwen-form-messages --remote",
     "cf:deploy": "wrangler deploy",
-    "build": "node scripts/build-static.js",
+    "build": "npm --prefix game run build && node scripts/build-static.js",
     "preview:static": "node scripts/preview-static.js",
-    "start:legacy": "node server.js"
+    "start:legacy": "node server.js",
+    "game:dev": "npm --prefix game run dev",
+    "game:test": "npm --prefix game test"
   },
   "engines": {
     "node": ">=22"

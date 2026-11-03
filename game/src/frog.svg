@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="300" viewBox="0 0 240 300">
+<defs><radialGradient id="skin" cx="35%" cy="28%" r="75%"><stop stop-color="#fff18b"/><stop offset=".48" stop-color="#f5d437"/><stop offset="1" stop-color="#c99b19"/></radialGradient><radialGradient id="belly" cx="38%" cy="30%"><stop stop-color="#fff39c"/><stop offset="1" stop-color="#ecc733"/></radialGradient><radialGradient id="eye"><stop stop-color="#e3ee9e"/><stop offset=".75" stop-color="#9ebc5b"/><stop offset="1" stop-color="#617d37"/></radialGradient></defs>
+<g stroke="#b38c24" stroke-width="2" stroke-linejoin="round">
+<path d="M83 233 Q70 259 74 278 Q47 285 46 293 Q76 301 103 289 L111 246M145 236 Q167 258 159 278 Q192 282 192 292 Q164 300 141 289 L127 246" fill="url(#skin)"/>
+<path d="M83 75 Q67 96 67 121 C27 157 27 225 60 251 C87 278 160 274 184 243 C210 207 193 151 165 123 Q167 90 150 76Z" fill="url(#skin)"/>
+<ellipse cx="120" cy="197" rx="66" ry="61" fill="url(#belly)" stroke="none"/>
+<path d="M75 119 Q43 131 36 174 Q33 191 49 200 L86 206 Q99 204 91 198 L62 187 Q53 175 76 153M161 121 Q191 135 198 172 Q202 186 188 197 L153 206 Q139 205 148 197 L176 183 Q180 168 159 150" fill="url(#skin)"/>
+<ellipse cx="87" cy="68" rx="29" ry="34" fill="url(#skin)"/><ellipse cx="151" cy="67" rx="29" ry="34" fill="url(#skin)"/>
+<ellipse cx="89" cy="65" rx="21" ry="25" fill="url(#eye)" stroke="#799040"/><ellipse cx="149" cy="64" rx="21" ry="25" fill="url(#eye)" stroke="#799040"/>
+<ellipse cx="94" cy="65" rx="8" ry="13" fill="#282e1a" stroke="none"/><ellipse cx="145" cy="64" rx="8" ry="13" fill="#282e1a" stroke="none"/>
+<circle cx="96" cy="60" r="3" fill="#fff" stroke="none"/><circle cx="147" cy="59" r="3" fill="#fff" stroke="none"/>
+<path d="M80 99 Q117 114 158 97 Q150 145 121 145 Q95 141 80 99" fill="#654523"/><path d="M92 109 Q121 118 148 107 L141 119 Q119 125 99 118Z" fill="#fff4d1" stroke="none"/><path d="M106 136 Q122 124 139 136 Q122 148 106 136" fill="#d88d6b" stroke="none"/>
+<path d="M112 87 l3 2 M129 87 l3 -2" fill="none" stroke="#997820" stroke-width="3"/>
+<path d="M117 228 Q122 233 127 227" fill="none" stroke="#c8a42a"/>
+</g></svg>

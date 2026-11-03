@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1,viewport-fit=cover"
+    />
+    <title>奶蛙弹跳大冒险 · Milk Frog Bounce</title>
+  </head>
+  <body>
+    <header>
+      <a href="../">↖ 返回工作室</a
+      ><span>MILK FROG / SMALL GAME, BIG BELLY</span
+      ><button id="sound">声音：关</button>
+    </header>
+    <main>
+      <div class="heading">
+        <div>
+          <small>ONE BUTTON. MANY BAD DECISIONS.</small>
+          <h1>奶蛙弹跳<span>大冒险。</span></h1>
+        </div>
+        <p>尖刺不会杀死你。<br />它只是有点不客气。</p>
+      </div>
+      <div class="toolbar">
+        <span id="stats">准备出发</span>
+        <div>
+          <button id="pause">暂停 Esc</button
+          ><button id="restart">重来 R</button>
+        </div>
+      </div>
+      <div id="game">
+        <div id="overlay">
+          <small>一只奶蛙，一段不太体面的旅程</small>
+          <h2>肚子大，<br />梦想也不小。</h2>
+          <p>
+            按住鼠标 / 空格 / 游戏区域蓄力，松开跳跃。<br />必须落稳才能再跳；撞上尖刺会向后弹退。<br />掉进深坑回到检查点，无限向前，没有终点，挑战最远距离。
+          </p>
+          <button id="play">开始弹跳 ↗</button>
+          <p id="best"></p>
+        </div>
+      </div>
+      <div class="charge">
+        <span id="hint">落稳 → 按住 → 松开</span>
+        <div><i id="power"></i></div>
+        <strong id="percent">0%</strong>
+      </div>
+      <footer>
+        <span>∞ 无限模式 · 不旋转 · 落地即停</span
+        ><span>奶蛙参考图改编 · 成绩仅存本机</span>
+      </footer>
+    </main>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

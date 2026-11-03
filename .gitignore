@@ -5,4 +5,7 @@ node_modules/
 .wrangler/
 .dev.vars
 dist/
+game/node_modules/
+game/dist/
+artifacts/
 docs/PersonalWeb-source.zip

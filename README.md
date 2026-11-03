@@ -1,4 +1,4 @@
-> 当前部署方式已改为 GitHub Pages + Giscus。运行 npm start 预览静态版本（端口 3001）。详见 [部署说明](docs/github-pages.md)。下方 Node/Cloudflare 说明为历史实现，发布包不包含这些后端。
+> 当前部署方式为 GitHub Pages + Giscus。首次运行 `npm ci` 和 `npm ci --prefix game`，然后 `npm start` 预览静态版本（端口 3001）。小游戏入口为 `/game/`，详见 [游戏说明](docs/milk-frog.md) 和 [部署说明](docs/github-pages.md)。下方 Node/Cloudflare 说明为历史实现，发布包不包含这些后端。
 
 # FORM® — 个人数字工作室
 
