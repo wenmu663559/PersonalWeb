@@ -1,6 +1,6 @@
 import Phaser from "phaser";
 import { ImpactLaugh } from "./laugh";
-import frogUrl from "./frog-sideeye.png?url";
+import frogUrl from "./frog-sideeye.webp?url";
 import "./style.css";
 import { CONFIG as C, launch, power, rebound } from "./physics";
 const $ = (id: string) => document.getElementById(id)!;

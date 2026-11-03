@@ -5,7 +5,7 @@ try {
  const page=await browser.newPage({...devices['Pixel 5']});
  const errors=[];page.on('pageerror',e=>errors.push(e.message));
  let release;const gate=new Promise(resolve=>release=resolve);
- await page.route('**/assets/*.png',async route=>{await gate;await route.continue();});
+ await page.route('**/assets/*.webp',async route=>{await gate;await route.continue();});
  await page.goto('http://localhost:3002/game/?debug=1',{waitUntil:'domcontentloaded'});
  await page.locator('#play').tap();
  assert.ok(await page.evaluate(()=>window.frogStartRequested),'Early mobile tap is remembered');
